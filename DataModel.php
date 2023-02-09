@@ -1,29 +1,27 @@
 <?php
 namespace pLinq;
-include_once(__DIR__.'/as.php');
-include_once(__DIR__.'/group.php');
-include_once(__DIR__.'/having.php');
-include_once(__DIR__.'/join.php');
-include_once(__DIR__.'/where.php');
-include_once(__DIR__.'/select.php');
-include_once(__DIR__.'/limit.php');
-include_once(__DIR__.'/order.php');
+
+use Where;
+
 class DataModel {
-    public static function as($alias = null) {
-        $as1 = new \pLinq\AsModel();
+    public static function as($alias = null): AsModel
+    {
+        $as1 = new AsModel();
         $as1->Table = get_called_class();
         $as1->Alias = $alias;
         return $as1;
     }
-    public static function join($toJoin, $joinFields, $joinAlias = null) {
-        $join = new \pLinq\Join();
+    public static function join($toJoin, $joinFields, $joinAlias = null): Join
+    {
+        $join = new Join();
         $join->LeftAs = DataModel::as();
         $join->RightAs = $toJoin;
         $join->JoinFields = $joinFeilds;
         $join->JoinAlias = $joinAlias;
         return $join;
     }
-    public static function where($conditions) {
+    public static function where($conditions): Where
+    {
         $where = new Where();
         $as1 = new AsModel();
         $as1->Table = get_called_class();
@@ -32,12 +30,11 @@ class DataModel {
         return $where;
     }
     public static function group($fields) {
-        $group = new \pLinq\Group();
-        $as1 = new \pLinq\AsModel();
+        $group = new Group();
+        $as1 = new AsModel();
         $as1->Table = get_called_class();
         $where->Other = $as1;
-        $group = $fields;
-        return $group;
+        return $fields;
     }
     public static function insert($data) {
         $class = get_called_class();
@@ -73,12 +70,12 @@ class DataModel {
             }
             $sql = $sql . implode(',', $wheres);
         } else if($class == 'Where') {
-            $sql = $sql . \pLinq\Select::GetSqlFragment($conditions);
+            $sql = $sql . Select::GetSqlFragment($conditions);
         }
         $db->query($sql);
     }
-    public static function select($fields) {
-        return new \pLinq\Select(get_called_class(), $fields);
+    public static function select($fields): Select
+    {
+        return new Select(get_called_class(), $fields);
     }
 }
-?>

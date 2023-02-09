@@ -3,21 +3,23 @@ namespace pLinq;
 class Having {
     public $Other;
     public $Conditions = array();
-    public function select($fields) {
-        return new \pLinq\Select($this, $fields);
+    public function select($fields): Select
+    {
+        return new Select($this, $fields);
     }
-    public function limit($numberOfRows, $offset = 0) {
-        $limit = new \pLinq\Limit();
+    public function limit($numberOfRows, $offset = 0): Limit
+    {
+        $limit = new Limit();
         $limit->Offset = $offset;
         $limit->Rows = $numberOfRows;
         $limit->Other = $this;
         return $limit;
     }
-    public function orderBy($fields) {
-        $order = new \pLinq\Order();
+    public function orderBy($fields): Order
+    {
+        $order = new Order();
         $order->Fields = $fields;
         $order->Other= $this;
         return $order;
     }
 }
-?>

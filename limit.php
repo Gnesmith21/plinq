@@ -4,8 +4,8 @@ class Limit {
     public $Other;
     public $Rows;
     public $Offset;
-    public function select($fields) {
-        return new \pLinq\Select($this, $fields);
+    public function select($fields): Select
+    {
+        return new Select($this, $fields);
     }
 }
-?>

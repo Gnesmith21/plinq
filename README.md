@@ -16,7 +16,7 @@ Now you can use the code just like linq in C#:
                 ->Select('Name')
                 ->ToArray();
                 
-As you can see now you can compoenize your data access.  If you wanted to join all the Foo examples to Bar exaples you can write something like this as well:
+As you can see now you can compoenize your data access.  If you wanted to join all the Foo examples to Bar examples you can write something like this as well:
 
     $foos = Example
                 ::As('e')
